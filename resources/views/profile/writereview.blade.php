@@ -84,9 +84,9 @@ input[type=submit]:hover {
     </div>
     <div class="col-75">
         <select id="rate" name="rate">
-        @foreach ($rates as $rate)
-                <option value="{{ $rate['id'] }}">{{ $rate['name'] }}</option>
-         @endforeach
+        @foreach($rates as $rate)
+        <option value="{{ $rate }}">{{ $rate }}</option>
+        @endforeach
         </select>
     </div>
 

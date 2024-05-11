@@ -13,6 +13,8 @@ use App\Strategy\PaymentContext;
 use Illuminate\Validation\Rule;
 use SimpleXMLElement;
 use Illuminate\Support\Facades\Session;
+use App\Services\EncryptionService;
+use Http;
 
 
 class PaymentController extends Controller
@@ -59,7 +61,7 @@ class PaymentController extends Controller
         return redirect()->route('reservations_form')->with('success', 'Payment canceled successfully.');
     }
 
-    public function processPayment(Request $request)
+    public function processPayment(Request $request,EncryptionService $encryptionService)
     {
         // Validate the payment data
         $validatedData = $request->validate([
@@ -67,9 +69,10 @@ class PaymentController extends Controller
             'cardholderName' => 'required|string|max:255',
             'cardNumber' => 'required|regex:/^\d{4}-\d{4}-\d{4}-\d{4}$/',
             'cardExp' => 'required|regex:/^\d{2}\/\d{2}$/',
-            'cvv' => 'required|integer|digits:3',
+            'cvv' => 'required|numeric',
             'billingAddress' => 'required|string',
         ]);
+
 
         $paymentMethod = $request->input('paymentMethod');
         $cardholderName = $request->input('cardholderName');
@@ -78,12 +81,25 @@ class PaymentController extends Controller
         $cvv = $request->input('cvv');
         $billingAddress = $request->input('billingAddress');
 
+        $response = Http::post('http://127.0.0.1:8081/api/payment', [
+            'cardNumber' => $cardNumber,
+        ]);
+
+        if ($response->successful()) {
+            // Decode the JSON response
+            $responseData = $response->json();
+
+            if ($responseData['exists'] === true) {
+                // Card exists, continue with payment process
+                $encryptCardNumber = $encryptionService->encrypt($request->input('cardNumber'));
+                $encryptCvv = $encryptionService->encrypt($request->input('cvv'));
+
         $request->session()->put('paymentData', [
             'paymentMethod' => $paymentMethod,
             'cardholderName' => $cardholderName,
-            'cardNumber' => $cardNumber,
+            'cardNumber' => $encryptCardNumber,
             'cardExp' => $cardExp,
-            'cvv' => $cvv,
+            'cvv' => $encryptCvv,
             'billingAddress' => $billingAddress,
         ]);
 
@@ -128,6 +144,11 @@ class PaymentController extends Controller
 
             return redirect()->route('reservations_form')->with('Payment processed fail.');
         }
+            } else {
+                return redirect()->route('payment_page')->with('error', 'Card not found. Please re-enter your card information.');
+            }
+        }
+
     }
 
     public function insertPayment(Request $request)

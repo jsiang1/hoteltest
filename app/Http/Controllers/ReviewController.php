@@ -10,10 +10,12 @@ use App\Models\Review;
 use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use App\Models\Reservation;
 use SimpleXMLElement;
 use DOMDocument;
 use DOMXPath;
+use Http;
 
 
 
@@ -41,7 +43,15 @@ class ReviewController extends Controller
         $roomTypes = $this->getRoomTypes($xpath);
         $rates = $this->getRates($xpath);
 
-        return view('home.review', compact('reviews', 'roomTypes','rates'));
+            $response = Http::get('http://127.0.0.1:8081/api/review');
+            if($response->successful()){
+                $reviewData = json_decode($response->body(), true);
+        }else{
+            log::error('Fail to fetch review from API:'. $response->status());
+            $reviewData = [];
+        }
+
+        return view('home.review', compact('reviews', 'roomTypes','rates','reviewData'));
     }
 
     private function getRoomTypes($xpath)
@@ -82,29 +92,18 @@ class ReviewController extends Controller
     // Retrieve roomID using $reservationID
     $roomID = Reservation::findOrFail($reservationID)->roomID;
 
-    $rates = $this->parseRate();
+    // Load XML file
+    $xmlData = file_get_contents(app_path('XML/reviews.xml'));
+    $xml = new DOMDocument();
+    $xml->loadXML($xmlData);
+
+    // Create XPath instance
+    $xpath = new DOMXPath($xml);
+
+    $rates = $this->getRates($xpath);
 
     return view('profile.writereview', ['roomID' => $roomID,'reservationID' => $reservationID],['rates' => $rates]);
 }
-
-private function parseRate()
-    {
-        // Load the XML file from the app/XML directory
-        $xmlPath = app_path('XML/reviews.xml');
-        $xmlString = file_get_contents($xmlPath);
-        $xml = new SimpleXMLElement($xmlString);
-
-        // Extract room types
-        $rates = [];
-        foreach ($xml->rate as $rate) {
-            $rates[] = [
-                'id' => (string) $rate['id'],
-                'name' => (string) $rate,
-            ];
-        }
-
-        return $rates;
-    }
 
     public function submitReview(Request $request)
     {
@@ -122,8 +121,6 @@ private function parseRate()
             'rate' => $request->rate,
             'comment' => $request->comment,
         ]);
-
-        // Notify admin about the new review (you can implement this using notifications)
 
         return redirect()->route('profile.history');
     }

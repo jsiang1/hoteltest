@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Pang Jin Siang
+ * @author Tan Xuan Ying
  */
 namespace App\Models;
 

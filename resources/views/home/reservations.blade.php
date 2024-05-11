@@ -68,6 +68,14 @@
                                         </select>
                                     </div>
                                     <div class="col-xl-12">
+                                        <label for="room_type">Select Service</label>
+                                        <select class="form-select wide" id="default-select" name="room_service">
+                                        @foreach($serviceData as $service)
+                                        <option value="{{ $service['roomService'] }}">{{ $service['roomService'] }}</option>
+                                        @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-xl-12">
                                         <button type="submit" class="boxed-btn3" >Proceed to Payment</button>
                                     </div>
                                 </div>
@@ -138,10 +146,10 @@
     <script>
         $(function(){
     $('#datepicker').datepicker({
-            format: 'yyyy-mm-dd',
-            iconsLibrary: 'fontawesome',
-            icons: {
-             rightIcon: '<span class="fa fa-caret-down"></span>'
+        minDate: 0,
+        format: 'yyyy-mm-dd',
+        iconsLibrary: 'fontawesome',
+        icons: {rightIcon: '<span class="fa fa-caret-down"></span>'
          }
         });
         $('#datepicker2').datepicker({

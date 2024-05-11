@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @author Lee Kong Hang
+ */
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +12,7 @@ class Reservation extends Model
     use HasFactory;
 
     protected $primaryKey = 'reservationID';
-    protected $fillable = ['reservationID','roomID', 'customerID', 'checkInDate', 'checkOutDate', 'reservedRoomNumber', 'totalPrice'];
+    protected $fillable = ['reservationID','roomID', 'customerID', 'checkInDate', 'checkOutDate', 'reservedRoomNumber', 'totalPrice','service'];
     
     public function room()
     {

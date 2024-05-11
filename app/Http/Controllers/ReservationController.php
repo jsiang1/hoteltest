@@ -13,6 +13,8 @@ use SimpleXMLElement;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class ReservationController extends Controller
 {
@@ -21,7 +23,15 @@ class ReservationController extends Controller
         // Retrieve room types from the database
         $rooms = $this->parseRoomTypes();
 
-        return view('home.reservations', ['rooms' => $rooms]);
+        $response = Http::get('http://127.0.0.1:8081/api/reservation');
+            if($response->successful()){
+                $serviceData = json_decode($response->body(), true);
+        }else{
+            log::error('Fail to fetch review from API:'. $response->status());
+            $serviceData = [];
+        }
+
+        return view('home.reservations', ['rooms' => $rooms],['serviceData'=> $serviceData]);
 
     }
 
@@ -57,6 +67,7 @@ class ReservationController extends Controller
             'room_id' => 'required|in:1,2,3',
             'check_in_date' => '',
             'check_out_date' => '',
+            'room_service' => '',
         ]);
 
         $roomID = $request->input('room_id');
@@ -68,12 +79,15 @@ class ReservationController extends Controller
         $numberOfNights = $checkInDate->diffInDays($checkOutDate);
         $totalPrice = $room->pricePerNight * $numberOfNights;
 
+        $roomService = $request->input('room_service');
+
         // Store the reservation details in the session
         $request->session()->put('reservation', [
         'room_id' => $roomID,
         'check_in_date' => $checkInDate->format('Y-m-d'),
         'check_out_date' => $checkOutDate->format('Y-m-d'),
         'totalPrice' => $totalPrice,
+        'room_service'=> $roomService,
         ]);
 
         // Redirect to the payment page
@@ -94,7 +108,8 @@ class ReservationController extends Controller
         $reservationData['room_id'],
         $customerID,
         $reservationData['check_in_date'],
-        $reservationData['check_out_date']
+        $reservationData['check_out_date'],
+        $reservationData['room_service'],
     );
 
     // Clear the reservation details from session

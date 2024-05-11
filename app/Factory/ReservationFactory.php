@@ -10,7 +10,7 @@ use Carbon\Carbon;
 
 class ReservationFactory
 {
-    public static function createReservation($roomID, $customerID, $checkInDate, $checkOutDate)
+    public static function createReservation($roomID, $customerID, $checkInDate, $checkOutDate, $service)
 {
     // Retrieve the room details based on the provided room ID
     $room = Room::findOrFail($roomID);
@@ -24,7 +24,6 @@ class ReservationFactory
     $numberOfNights = $checkOut->diffInDays($checkIn);
     $totalPrice = $room->pricePerNight * $numberOfNights;
 
-
     // Create reservation
     $reservation = new Reservation();
     $reservation->customerID = $customerID;
@@ -33,6 +32,7 @@ class ReservationFactory
     $reservation->checkOutDate = $checkOutDate;
     $reservation->reservedRoomNumber = $reservedRoomNumber;
     $reservation->totalPrice = $totalPrice;
+    $reservation->service = $service;
     $reservation->save();
 
     return $reservation;

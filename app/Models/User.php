@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @author Tan Xuan Ying
+ */
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;

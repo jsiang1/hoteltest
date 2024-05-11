@@ -212,4 +212,11 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    'apiEndpoint' => 'http://127.0.0.1:8081/api/payment',
+
+    'apiEndpoint1' => 'http://127.0.0.1:8081/api/review',
+
+    'apiEndpoint2' => 'http://127.0.0.1:8081/api/reservation',
+
+    'apiEndpoint3' => 'http://127.0.0.1:8081/api/authenticate',
 ];

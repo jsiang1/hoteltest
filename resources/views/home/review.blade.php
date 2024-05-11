@@ -51,7 +51,7 @@
                 <div class="col-lg-8 posts-list">
                     <div class="single-post">
                         <div class="blog_details">
-                            <h2>Review Section</h2>
+                            <h2>Room Review</h2>
                             <!-- Filter Form -->
                             <form action="{{ route('reviews.filter') }}" method="GET">
                             @CSRF
@@ -82,6 +82,17 @@
                                     <h2>Rate : {{ $review->rate }} Star</h2>
                                     <h4>Comment: {{ $review->comment }} </h4>
                                     <p>Create at: {{ $review->created_at }}</p>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                        <div class="blog_details">
+                            <h2>Hotel Review</h2>
+                            @foreach($reviewData as $reviewH)
+                            <div class="quote-wrapper">
+                                <div class="quotes">
+                                    <h2>Rate : {{ $reviewH['rate'] }} Star</h2>
+                                    <h4>Comment: {{ $reviewH['comment'] }} </h4>
                                 </div>
                             </div>
                             @endforeach
