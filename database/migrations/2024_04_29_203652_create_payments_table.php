@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id('paymentID');
             $table->unsignedBigInteger('reservationID');
-            $table->foreign('reservationID')->references('reservationID')->on('reservations')->onDelete('cascade'); // Assuming roomID is a foreign key referencing the rooms table
+            $table->foreign('reservationID')->references('reservationID')->on('reservations')->onDelete('cascade'); 
             $table->date('date');
             $table->string('paymentMethod');
             $table->string('cardholderName');

@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<genders>
+    <gender id="male">Male</gender>
+    <gender id="female">Female</gender>
+</genders>

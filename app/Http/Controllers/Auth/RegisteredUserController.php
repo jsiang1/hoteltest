@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use SimpleXMLElement;
 
 class RegisteredUserController extends Controller
 {
@@ -20,7 +21,25 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $genders = $this->parseGenders();
+
+        return view('auth.register',['genders' => $genders]);
+    }
+
+    private function parseGenders()
+    {
+        // Load the XML file from the app/XML directory
+        $xmlPath = app_path('XML/genders.xml');
+        $xmlString = file_get_contents($xmlPath);
+        $xml = new SimpleXMLElement($xmlString);
+
+        // Extract gender types
+        $genders = [];
+        foreach ($xml->gender as $gender) {
+            $genders[(string)$gender['id']] = (string)$gender;
+        }
+
+        return $genders;
     }
 
     /**

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<reviews>
+    <review>
+        <room>single</room>
+    </review>
+    <review>
+        <room>deluxe</room>
+    </review>
+    <review>
+        <room>family</room>
+    </review>
+    <rate>1</rate>
+    <rate>2</rate>
+    <rate>3</rate>
+    <rate>4</rate>
+    <rate>5</rate>
+</reviews>

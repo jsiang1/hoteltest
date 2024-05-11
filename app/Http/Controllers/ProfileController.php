@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reservation;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,11 +15,24 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
+    public function home(): View
+    {
+        return view('home/index');
+    }
+
     public function edit(Request $request): View
     {
         return view('profile.edit', [
             'user' => $request->user(),
         ]);
+    }
+
+    public function history()
+    {
+        // Retrieve reservations with associated room types based on user ID
+        $userReservations = Reservation::with('room')->where('customerID', auth()->user()->id)->get();
+
+        return view('profile.history', ['reservations' => $userReservations]);
     }
 
     /**

@@ -25,10 +25,12 @@
                         
                     <x-slot name="content">
 
-                    
-                        <div class="p-4">
-                            <a class="btn btn-primary btn-block" href="/index">{{__('Home')}}</a>
-                        </div>
+                        <x-dropdown-link :href="route('profile.home')">{{__('Home')}}
+                        </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('profile.history')">{{__('Resevation History')}}
+                        </x-dropdown-link>
+
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>

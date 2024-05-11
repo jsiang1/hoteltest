@@ -33,11 +33,9 @@
         <![endif]-->
 
     <!-- header-start -->
-    <header>
-        @include('home.header')
-    </header>
+
     <!-- header-end -->
-    <div class="bradcam_area breadcam_bg_1">
+    <div class="bradcam_area" style="background: img/banner/bradcam3.png;">
         <h3>Reservation</h3>
     </div>
         <!-- about_area_start -->
@@ -46,66 +44,23 @@
     <!-- about_area_end -->
 
     <div >
-    <div id="test-form" class="white-popup-block" style="padding-top: 600px">
+    <div id="test-form" class="white-popup-block" style="padding-bottom: 100px">
                 <div class="popup_box ">
+                    <div>
+                        <img src="img/completeicon.jpg">
+                    </div>
                         <div class="popup_inner">
-                            <h3>Fill in detail</h3>
-                            <form method="POST" action="{{ route('submit_reservation') }}">
-                            @csrf
-                                <div class="row">
-                                    <div class="col-xl-6">
-                                        <input  id="datepicker" placeholder="Check in date" name="check_in_date" required>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <input  id="datepicker2" placeholder="Check out date" name="check_out_date" required>
-                                    </div>
-                                    <div class="col-xl-12">
-                                        <label for="room_type">Select Room Type</label>
-                                        <select class="form-select wide" id="default-select" name="room_id">
-                                        @foreach($rooms as $room)
-                                        <option value="{{ $room['id'] }}">{{ $room['name'] }}</option>
-                                        @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-xl-12">
-                                        <button type="submit" class="boxed-btn3" >Proceed to Payment</button>
-                                    </div>
-                                </div>
-                            </form>
+                            <h3>Payment Completed !</h3>
+                            <h2>Your selected hotel has been reserved ! </h2>
+                        </div>
+                        <div class="col-xl-12">
+                            <a href="index" class="boxed-btn3" >Next</a>
                         </div>
                     </div>
 </div>
     </div>
 
     <!-- forQuery_end-->
-
-    <!-- instragram_area_start -->
-    <div class="instragram_area">
-        <div class="single_instagram">
-            <img src="img/instragram/1.png" alt="">
-        </div>
-        <div class="single_instagram">
-            <img src="img/instragram/2.png" alt="">
-
-        </div>
-        <div class="single_instagram">
-            <img src="img/instragram/3.png" alt="">
-
-        </div>
-        <div class="single_instagram">
-            <img src="img/instragram/4.png" alt="">
-
-        </div>
-        <div class="single_instagram">
-            <img src="img/instragram/5.png" alt="">
-        </div>
-    </div>
-    <!-- instragram_area_end -->
-
-    <!-- footer -->
-    @include("home.footer")
-
-    <!-- link that opens popup -->
 
     <!-- JS here -->
     <script src="js/vendor/modernizr-3.5.0.min.js"></script>
@@ -135,28 +90,6 @@
     <script src="js/mail-script.js"></script>
 
     <script src="js/main.js"></script>
-    <script>
-        $(function(){
-    $('#datepicker').datepicker({
-            format: 'yyyy-mm-dd',
-            iconsLibrary: 'fontawesome',
-            icons: {
-             rightIcon: '<span class="fa fa-caret-down"></span>'
-         }
-        });
-        $('#datepicker2').datepicker({
-            format: 'yyyy-mm-dd',
-            iconsLibrary: 'fontawesome',
-            icons: {
-             rightIcon: '<span class="fa fa-caret-down"></span>'
-         }
-        }); 
-    });
-        
-    </script>
-
-
-
 </body>
 
 </html>

@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<paymentMethods>
+    <method id="credit_card">Credit Card</method>
+    <method id="paypal">PayPal</method>
+</paymentMethods>

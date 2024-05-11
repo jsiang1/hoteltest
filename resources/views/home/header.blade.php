@@ -8,8 +8,7 @@
                                     <ul id="navigation">
                                         <li><a href="/index">home</a></li>
                                         <li><a href="/rooms">rooms</a></li>
-                                        <li><a href="about.html">About</a></li>
-                                        <li><a href="contact.html">Contact</a></li>
+                                        <li><a href="/review">Review</a></li>
                                         <li><a href="/reservations">Reservation</a></li>
                                     </ul>
                                 </nav>

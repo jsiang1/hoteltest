@@ -81,7 +81,7 @@
 		    					</a>
 		    					<div class="text p-3 text-center">
 		    						<h3 class="mb-3"><a href="/singleroom">Single Room</a></h3>
-		    						<p><span class="price mr-2">$100.00</span> <span class="per">per night</span></p>
+		    						<p><span class="price mr-2">${{ $singleRoom->pricePerNight }}</span> <span class="per">per night</span></p>
 		    						<ul class="list">
 		    							<li><span>Max:</span> 3 Persons</li>
 		    							<li><span>Size:</span> 45 m2</li>
@@ -102,7 +102,7 @@
 		    					</a>
 		    					<div class="text p-3 text-center">
 		    						<h3 class="mb-3"><a href="/deluxeroom">Deluxe Room</a></h3>
-		    						<p><span class="price mr-2">$150.00</span> <span class="per">per night</span></p>
+		    						<p><span class="price mr-2">${{ $deluxeRoom->pricePerNight }}</span> <span class="per">per night</span></p>
 		    						<ul class="list">
 		    							<li><span>Max:</span> 3 Persons</li>
 		    							<li><span>Size:</span> 45 m2</li>
@@ -123,7 +123,7 @@
 		    					</a>
 		    					<div class="text p-3 text-center">
 		    						<h3 class="mb-3"><a href="/familyroom">Family Room</a></h3>
-		    						<p><span class="price mr-2">$200.00</span> <span class="per">per night</span></p>
+		    						<p><span class="price mr-2">${{ $familyRoom->pricePerNight }}</span> <span class="per">per night</span></p>
 		    						<ul class="list">
 		    							<li><span>Max:</span> 5 Persons</li>
 		    							<li><span>Size:</span> 45 m2</li>

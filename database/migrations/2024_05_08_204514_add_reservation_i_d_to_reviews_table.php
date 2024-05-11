@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reviews', function (Blueprint $table) {
-            $table->id('reviewID');
-            $table->string('rate');
-            $table->string('comment');
-            $table->timestamps();
+        Schema::table('reviews', function (Blueprint $table) {
+            $table->unsignedBigInteger('reservationID')->after('reviewID');
+            $table->foreign('reservationID')->references('reservationID')->on('reservations')->onDelete('cascade');
         });
     }
 
@@ -24,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reviews');
+        Schema::table('reviews', function (Blueprint $table) {
+            //
+        });
     }
 };

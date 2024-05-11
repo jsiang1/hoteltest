@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<room_types>
-    <room_type>single</room_type>
-    <room_type>deluxe</room_type>
-    <room_type>family</room_type>
-</room_types>
+<rooms>
+    <room id="1">single</room>
+    <room id="2">deluxe</room>
+    <room id="3">family</room>
+</rooms>

@@ -3,16 +3,20 @@
         @csrf
 
         <!-- Name -->
-        <div>
+        <div class="mt-4">
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
-        
+
         <!-- Gender -->
-        <div>
+        <div class="mt-4">
             <x-input-label for="gender" :value="__('Gender')" />
-            <x-text-input id="gender" class="block mt-1 w-full" type="text" name="gender" :value="old('gender')" required autofocus autocomplete="gender" />
+            <select id="gender" name="gender" class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                @foreach($genders as $id => $name)
+                    <option value="{{ $id }}">{{ $name }}</option>
+                @endforeach
+            </select>
             <x-input-error :messages="$errors->get('gender')" class="mt-2" />
         </div>
 
@@ -24,7 +28,7 @@
         </div>
 
         <!-- Phone -->
-        <div>
+        <div class="mt-4">
             <x-input-label for="phone" :value="__('Phone')" />
             <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required autofocus autocomplete="phone" />
             <x-input-error :messages="$errors->get('phone')" class="mt-2" />
