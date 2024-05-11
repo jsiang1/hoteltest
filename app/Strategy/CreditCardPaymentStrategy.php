@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @author Whelan Yap Boon Hong
+ */
 namespace App\Strategy;
 
 class CreditCardPaymentStrategy implements PaymentStrategy

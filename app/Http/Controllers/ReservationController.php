@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @author Lee Kong Hang
+ */
 namespace App\Http\Controllers;
 
 use App\Models\Room;

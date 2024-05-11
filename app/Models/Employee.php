@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @author Pang Jin Siang
+ */
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
