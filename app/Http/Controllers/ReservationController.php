@@ -7,6 +7,9 @@ namespace App\Http\Controllers;
 use App\Models\Room;
 use App\Models\Reservation;
 use App\Factory\ReservationFactory;
+use App\Factory\singleRoomReservationFactory;
+use App\Factory\deluxeRoomReservationFactory;
+use App\Factory\familyRoomReservationFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use SimpleXMLElement;
@@ -97,26 +100,40 @@ class ReservationController extends Controller
     public function makeReservation(Request $request)
     {
 
-    // Retrieve the reservation data from the request
-    $reservationData = $request->session()->get('reservation');
+        // Retrieve the reservation data from the request
+        $reservationData = $request->session()->get('reservation');
 
-    // Get customer ID from session (assuming it's stored after user login)
-    $customerID = auth()->user()->id;
+        // Get customer ID from session (assuming it's stored after user login)
+        $customerID = auth()->user()->id;
 
-    // Create the reservation using the ReservationFactory
-    ReservationFactory::createReservation(
-        $reservationData['room_id'],
-        $customerID,
-        $reservationData['check_in_date'],
-        $reservationData['check_out_date'],
-        $reservationData['room_service'],
-    );
+        // Determine which factory to use based on room ID
+        $factory = $this->getFactory($reservationData['room_id']);
 
-    // Clear the reservation details from session
-    $request->session()->forget('reservationData');
+        // Create reservation using the appropriate factory
+        $reservation = $factory->createReservation($reservationData,$customerID);
+
+        // Process the reservation (e.g., save to database)
+        $reservation->save();
+
+        // Clear the reservation details from session
+        $request->session()->forget('reservationData');
 
         // Redirect back with success message or do anything else
         return redirect()->route('insert_payment');
+    }
+
+    private function getFactory($roomID) {
+        // Determine and return the appropriate factory based on room ID
+        switch ($roomID) {
+            case 1:
+                return new singleRoomReservationFactory();
+            case 2:
+                return new deluxeRoomReservationFactory();
+            case 3:
+                return new familyRoomReservationFactory();
+            default:
+                throw new \InvalidArgumentException("Invalid room ID");
+        }
     }
 
     public function index()
