@@ -75,7 +75,7 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary">Filter</button>
                             </form>  
-                            @foreach($reviews as $review)
+                            @forelse($reviews as $review)
                             <div class="quote-wrapper">
                                 <div class="quotes">
                                     <h2>Room Type: {{ optional($review->room)->roomType }}</h2>
@@ -84,10 +84,14 @@
                                     <p>Create at: {{ $review->created_at }}</p>
                                 </div>
                             </div>
-                            @endforeach
+                            @empty
+                            <br><hr>
+                            <h4><b>No reviews yet.</b></h4>
+                            @endforelse
                         </div>
                         <div class="blog_details">
                             <h2>Hotel Review</h2>
+                            <hr>
                             @foreach($reviewData as $reviewH)
                             <div class="quote-wrapper">
                                 <div class="quotes">

@@ -5,8 +5,9 @@
     <form method="POST" action="{{ route('employee.login') }}">
         @csrf
 
-
-
+        <h1><b>Employee Login</b></h1>
+        <hr>
+        
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="username" :value="__('Username')" />
